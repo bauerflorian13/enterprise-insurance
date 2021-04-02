@@ -12,61 +12,63 @@ import org.junit.jupiter.api.Test;
 
 public class SimpleTest {
 
+    public Long id;
+
     @Test
     public void crud() {
         SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-//        new AnnotationConfiguration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
 
         create(session);
         read(session);
-//
-//        update(session);
-//        read(session);
-//
-//        delete(session);
-//        read(session);
+
+        update(session);
+        read(session);
+
+        delete(session);
+        read(session);
 
         session.close();
     }
 
     private void delete(Session session) {
-//        System.out.println("Deleting mondeo record...");
-//        Car mondeo = (Car) session.get(Car.class, "mondeo");
-//
-//        session.beginTransaction();
-//        session.delete(mondeo);
-//        session.getTransaction().commit();
+        System.out.println("Deleting Hansi record...");
+        Person person = session.get(Person.class, id);
+
+        session.beginTransaction();
+        session.delete(person);
+        session.getTransaction().commit();
     }
 
     private void update(Session session) {
-//        System.out.println("Updating mustang price...");
-//        Car mustang = (Car) session.get(Car.class, "mustang");
-//        mustang.setModel("mustang");
-//        mustang.setPrice("£35,250.00");
-//
-//        session.beginTransaction();
-//        session.saveOrUpdate(mustang);
-//        session.getTransaction().commit();
+        System.out.println("Updating Hansi...");
+        Person person = session.get(Person.class, id);
+        person.setLastName("Huberito");
+
+        session.beginTransaction();
+        session.saveOrUpdate(person);
+        session.getTransaction().commit();
     }
 
     private void create(Session session) {
         System.out.println("Creating person records...");
-        Person person = new Person("Hansi", "Meier");
+        Person person = new Person();
+        person.setFirstName("Hansi");
+        person.setLastName("Huber");
         session.beginTransaction();
-        session.save(person);
+        id = (Long) session.save(person);
         session.getTransaction().commit();
     }
 
     private void read(Session session) {
-        Query<Person> q = session.createQuery("select p from Person p");
+        Query<Person> q = session.createQuery("select p from Person p", Person.class);
 
         List<Person> persons = q.list();
 
         System.out.println("Reading records...");
-        System.out.println("FirstName\tLastName");
+        System.out.println("Id\tFirstName\tLastName");
         for (Person p : persons) {
-            System.out.println(p.getFirstName() + "\t" + p.getLastName());
+            System.out.println(p.getId() + "\t" + p.getFirstName() + "\t" + p.getLastName());
         }
     }
 }
