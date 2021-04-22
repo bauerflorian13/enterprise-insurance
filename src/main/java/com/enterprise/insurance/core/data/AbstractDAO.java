@@ -34,7 +34,11 @@ public abstract class AbstractDAO<E extends AbstractEntity> {
 
 
     public final E getById(long id){
-        return (E) pm.getSession().get(type, id);
+        return em.find(type, id);
+    }
+
+    public void flush(){
+        pm.commitBeginTransaction();
     }
 
 }

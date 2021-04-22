@@ -11,17 +11,13 @@ import javax.persistence.Persistence;
 
 public class PersistenceManager {
     private static PersistenceManager instance;
-    private final SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-    @Getter
-    private Session session;
     @Getter
     private EntityManager entityManager;
 
     private PersistenceManager(){
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("com.enterprise.insurance.persistence");
         entityManager = emf.createEntityManager();
-        createSession();
-        session.beginTransaction();
+        beginTransaction();
     }
 
     public static synchronized PersistenceManager getInstance(){
@@ -31,20 +27,15 @@ public class PersistenceManager {
         return instance;
     }
 
-    protected void createSession(){
-        session = sessionFactory.openSession();
-    }
-
-    protected void closeSession(){
-        session.close();
+    protected void rollbackTransaction(){
+        entityManager.getTransaction().rollback();
     }
 
     protected void beginTransaction(){
-        session.beginTransaction();
+        entityManager.getTransaction().begin();
     }
 
     protected void commitBeginTransaction(){
-        session.beginTransaction();
-        session.getTransaction().commit();
+        entityManager.getTransaction().commit();
     }
 }

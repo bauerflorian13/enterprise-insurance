@@ -14,7 +14,8 @@ public class AbstractDaoTest {
         Person person = new Person();
         person.setLastName("Huber");
         person.setFirstName("Hansi");
-//        Object object = personDAO.save(person);
-//        System.out.println(object);
+        Object object = personDAO.save(person);
+        personDAO.flush();
+        System.out.println(object);
     }
 }
