@@ -1,4 +1,4 @@
-package com.enterprise.insurance.core;
+package com.enterprise.insurance.core.service;
 
 import io.undertow.server.HttpHandler;
 import io.undertow.server.HttpServerExchange;
