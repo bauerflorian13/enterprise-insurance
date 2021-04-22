@@ -1,4 +1,4 @@
-
+package core;
 
 import java.util.List;
 
@@ -7,10 +7,9 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.internal.SessionFactoryImpl;
 import org.junit.jupiter.api.Test;
 
-public class SimpleTest {
+public class SimpleManualTest {
 
     public Long id;
 
