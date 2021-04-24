@@ -41,4 +41,12 @@ public abstract class AbstractDAO<E extends AbstractEntity> {
         pm.commitBeginTransaction();
     }
 
+    public void startNewTransaction(){
+        pm.beginTransaction();
+    }
+
+    public void rollback(){
+        pm.rollbackTransaction();
+    }
+
 }
